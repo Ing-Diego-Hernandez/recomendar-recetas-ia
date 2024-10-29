@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { auth } from '../firebaseConfig'; // Asegúrate de que esto apunte a tu configuración de Firebase
+import { signOut } from 'firebase/auth'; // Importa la función signOut
+import './recipe-recommender.css'; // Importa el CSS mejorado
 
 const getRecipeRecommendations = async (ingredients) => {
   try {
@@ -62,8 +65,25 @@ function RecipeRecommender() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Cierra sesión
+      // Puedes redirigir al usuario a la página de inicio de sesión aquí, si lo deseas
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+  
   return (
     <div className="container mx-auto p-4">
+      {/* Botón para cerrar sesión */}
+      <button
+        onClick={handleLogout}
+        className="mb-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+      >
+        Cerrar sesión
+      </button>
+
       <div className="w-full max-w-2xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
         <div className="p-6">
           <h2 className="text-2xl font-bold mb-2">Recomendador de Recetas con IA</h2>

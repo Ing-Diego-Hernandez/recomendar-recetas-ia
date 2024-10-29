@@ -1,0 +1,67 @@
+/* src/components/RecipeRecommender.css */
+.container {
+    max-width: 600px; /* Limita el ancho del contenedor */
+    margin: 0 auto; /* Centra el contenedor en la página */
+    padding: 20px;
+    background-color: #f9f9f9; /* Color de fondo suave */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+}
+
+h2 {
+    text-align: center;
+    color: #333; /* Color de texto oscuro */
+    font-size: 2rem; /* Tamaño de fuente más grande */
+    margin-bottom: 10px;
+}
+
+p {
+    text-align: center;
+    color: #666; /* Color de texto más suave */
+    font-size: 1rem; /* Tamaño de fuente estándar */
+    margin-bottom: 20px;
+}
+
+button {
+    transition: background-color 0.3s ease; /* Animación suave en hover */
+}
+
+input {
+    border-radius: 4px; /* Bordes redondeados */
+    border: 1px solid #ddd; /* Borde gris claro */
+    outline: none; /* Sin borde de enfoque */
+    padding: 12px; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente estándar */
+}
+
+input:focus {
+    border-color: #ccc; /* Color de borde en enfoque */
+    box-shadow: 0 0 5px #ccc; /* Sombra en enfoque */
+}
+
+button:hover {
+    background-color: #a06c6c; /* Color más oscuro en hover */
+}
+
+button:disabled {
+    background-color: #ccc; /* Color para botones deshabilitados */
+}
+
+.recipe-card {
+    background-color: #fff; /* Color de fondo blanco para las recetas */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 15px; /* Espaciado interno */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    margin-bottom: 15px; /* Espacio entre tarjetas */
+}
+
+.recipe-card h4 {
+    margin: 0 0 10px; /* Espacio entre título y contenido */
+    font-size: 1.2rem; /* Tamaño de fuente para el nombre de la receta */
+    color: #333; /* Color de texto para el título */
+}
+
+.recipe-card p {
+    color: #555; /* Color más suave para las instrucciones */
+    line-height: 1.5; /* Espaciado entre líneas */
+}
