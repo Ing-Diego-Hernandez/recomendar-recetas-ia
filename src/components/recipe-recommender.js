@@ -16,12 +16,21 @@ const getRecipeRecommendations = async (ingredients) => {
     }
 
     const data = await response.json();
-    const textResponse = data.choices[0].text;
+    const textResponse = data.recipeText;
     
-    const recipes = textResponse.split("\n\n").map((recipeText, index) => ({
-      name: `Receta ${index + 1}`,
-      instructions: recipeText.trim(),
-    }));
+    const recipes = textResponse.split("\n\n").reduce((acc, line) => {
+      if (line.startsWith("**")) {
+        // Si el título de la receta empieza con "**", añadimos un nuevo objeto de receta
+        acc.push({ name: line.replace("**", "").trim(), ingredients: [], preparation: [] });
+      } else if (line.startsWith("*")) {
+        // Si es una lista de ingredientes, la asignamos al último objeto receta
+        acc[acc.length - 1].ingredients.push(line.replace("*", "").trim());
+      } else if (line.startsWith("1.")) {
+        // Si es una lista de pasos de preparación, la asignamos al último objeto receta
+        acc[acc.length - 1].preparation.push(line.trim());
+      }
+      return acc;
+    }, []);
 
     return recipes;
   } catch (error) {
@@ -104,7 +113,8 @@ function RecipeRecommender() {
             {recipes.map((recipe, index) => (
               <div key={index} className="mb-4 p-4 bg-gray-100 rounded-md">
                 <h4 className="font-semibold">{recipe.name}</h4>
-                <p className="text-sm text-gray-600">{recipe.instructions}</p>
+                <p className="text-sm text-gray-600">{recipe.ingredients}</p>
+                <p className="text-sm text-gray-600">{recipe.preparation}</p>
               </div>
             ))}
           </div>

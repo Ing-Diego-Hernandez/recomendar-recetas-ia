@@ -1,3 +1,4 @@
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
@@ -8,28 +9,26 @@ const port = 5000; // El puerto en el que se ejecutará tu servidor
 app.use(cors());
 app.use(express.json());
 
+
 app.post('/api/generate-recipes', async (req, res) => {
   const ingredients = req.body.ingredients;
-  const apiKey = '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'; // Reemplaza con tu API Key de OpenAI
 
   try {
-    const response = await axios.post(
-      'https://api.openai.com/v1/completions',
-      {
-        model: 'text-davinci-003',
-        prompt: `Genera tres recetas utilizando los siguientes ingredientes: ${ingredients.join(', ')}.`,
-        max_tokens: 300,
-        temperature: 0.7,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-      }
-    );
+    
+    const genAI = new GoogleGenerativeAI("AIzaSyAEdkD6T4HWnfhJ71uxvDXO8vT8pmi3tEk");
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    res.json(response.data);
+    const prompt = `Genera tres recetas utilizando los siguientes ingredientes: ${ingredients.join(', ')}.`;
+
+    /*const result = await model.generateContent(prompt);
+    console.log(result.response.text());
+    res.json(result.response.text());*/
+    const result = await model.generateContent(prompt);
+    const textResponse = await result.response.text();
+    console.log("Respuesta del modelo:", textResponse); // Debugging
+    res.json({ recipeText: textResponse });
+
+
   } catch (error) {
     console.error('Error al obtener las recetas:', error);
     res.status(500).json({ error: 'Error al obtener las recetas' });
