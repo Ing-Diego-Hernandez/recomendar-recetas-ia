@@ -1,32 +1,26 @@
 import React, { useState } from 'react';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Función para obtener recomendaciones de recetas usando IA (OpenAI)
 const getRecipeRecommendations = async (ingredients) => {
   try {
-    const response = await fetch('http://localhost:5000/api/generate-recipes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ingredients }),
-    });
+    const genAI = new GoogleGenerativeAI("AIzaSyAEdkD6T4HWnfhJ71uxvDXO8vT8pmi3tEk");
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    if (!response.ok) {
-      throw new Error('Error al obtener las recetas de la IA');
-    }
-
-    const data = await response.json();
-    const textResponse = data.recipeText;
+    const prompt = `Genera tres recetas utilizando los siguientes ingredientes: ${ingredients.join(', ')}.`;
     
+    // Generar contenido usando el modelo
+    const result = await model.generateContent(prompt);
+    const textResponse = await result.response.text();
+
+    console.log("Respuesta del modelo:", textResponse); // Debugging
+
+    // Procesar la respuesta para obtener las recetas
     const recipes = textResponse.split("\n\n").reduce((acc, line) => {
       if (line.startsWith("**")) {
-        // Si el título de la receta empieza con "**", añadimos un nuevo objeto de receta
         acc.push({ name: line.replace("**", "").trim(), ingredients: [], preparation: [] });
       } else if (line.startsWith("*")) {
-        // Si es una lista de ingredientes, la asignamos al último objeto receta
         acc[acc.length - 1].ingredients.push(line.replace("*", "").trim());
       } else if (line.startsWith("1.")) {
-        // Si es una lista de pasos de preparación, la asignamos al último objeto receta
         acc[acc.length - 1].preparation.push(line.trim());
       }
       return acc;
@@ -38,7 +32,6 @@ const getRecipeRecommendations = async (ingredients) => {
     throw new Error('Error al obtener las recetas');
   }
 };
-
 
 function RecipeRecommender() {
   const [ingredients, setIngredients] = useState([]);
@@ -113,8 +106,8 @@ function RecipeRecommender() {
             {recipes.map((recipe, index) => (
               <div key={index} className="mb-4 p-4 bg-gray-100 rounded-md">
                 <h4 className="font-semibold">{recipe.name}</h4>
-                <p className="text-sm text-gray-600">{recipe.ingredients}</p>
-                <p className="text-sm text-gray-600">{recipe.preparation}</p>
+                <p className="text-sm text-gray-600">{recipe.ingredients.join(", ")}</p>
+                <p className="text-sm text-gray-600">{recipe.preparation.join("\n")}</p>
               </div>
             ))}
           </div>
