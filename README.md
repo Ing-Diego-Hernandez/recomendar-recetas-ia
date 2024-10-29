@@ -11,8 +11,11 @@ Para desplegarse se hizo a través de Netlify, se da de alta con github, en "Sit
 
 
 https://recomendar-recetas-ia.netlify.app/recommender
+
 Usuarios registrados:
+
 ~ correo: isa.ale@gmail.com  |  contraseña: juanito2
+
 ~ correo: diego.max@gmail.com  |  contraseña: juanito2
 
 Elaborado por:  
