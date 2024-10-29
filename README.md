@@ -10,7 +10,7 @@ La base de datos esta en firebase.
 Para desplegarse se hizo a través de Netlify, se da de alta con github, en "Sites" se da en "Add new site", se elige desde donde, en este caso de github y se elige que repositorio se quiere desplegar, se elige el nombre de la pagina, si se necesitan comandos se agrega y se da en deploy, en cuestion de segundos te dara el link de la pagina, ya desplegada.
 
 
-https://recomendar-recetas-ia.netlify.app/recommender
+https://recomendar-recetas-ia.netlify.app
 
 Usuarios registrados:
 
