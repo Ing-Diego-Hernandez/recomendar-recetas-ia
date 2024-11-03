@@ -1,95 +1,49 @@
-/* src/components/Login.css */
-.login-container {
-  max-width: 350px;
-  margin: 0 auto;
-  padding: 40px 30px;
-  border-radius: 15px;
-  background: rgba(0, 0, 0, 0.5); 
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px); 
-  color: #fcfbfb; 
-  text-align: center;
-}
+// src/components/Login.js
+import React, { useState } from 'react';
+import { auth } from '../firebaseConfig';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import './Login.css';
 
-body {
-  background: radial-gradient(circle at top left, #485297, #a0add3, #3d4e6d);
-  font-family: Arial, sans-serif;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-}
 
-.login-container h2 {
-  font-size: 22px;
-  color: #fff;
-  font-weight: normal;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-}
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-.login-container input[type="email"],
-.login-container input[type="password"] {
-  width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-  border: none;
-  border-bottom: 1px solid #888;
-  background: transparent;
-  color: #ddd;
-  font-size: 16px;
-  outline: none;
-}
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/recommender');
+    } catch (error) {
+      setError('Error al iniciar sesión: ' + error.message);
+    }
+  };
 
-.login-container input::placeholder {
-  color: #ffffff;
-}
+  return (
+    <div className="login-container">
+      <form onSubmit={handleLogin}>
+        <h2>Iniciar sesión</h2>
+        {error && <p className="error">{error}</p>}
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Iniciar sesión</button>
+        <p>¿No tienes una cuenta? <a href="/register">Regístrate aquí</a></p> {/* Enlace al registro */}
+      </form>
+    </div>
+  );
+};
 
-.login-container button {
-  width: 100%;
-  padding: 12px;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.login-container button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-.login-container .error {
-  color: #ff4d4d;
-  font-size: 0.9em;
-  margin-bottom: 10px;
-}
-
-.login-container a {
-  color: #ffffff;
-  font-size: 0.9em;
-  text-decoration: none;
-}
-
-.login-container .remember-me-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9em;
-  margin-top: 10px;
-  color: #edeaea;
-}
-
-.login-container .remember-me-container label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.login-container .remember-me-container input[type="checkbox"] {
-  accent-color: #bdbbbb;
-}
+export default Login;
