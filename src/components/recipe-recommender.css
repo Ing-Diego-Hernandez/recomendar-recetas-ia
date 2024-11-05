@@ -1,19 +1,23 @@
 /* src/components/RecipeRecommender.css */
 .container {
-    max-width: 600px;
+    max-width: 1000px; 
+    max-height: 600px; 
+    overflow-y: auto; 
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px; 
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para el título principal */
+
 h2 {
-    text-align: center;
-    color: #333;
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 2.5rem; 
+}
+
+/* Estilo para el párrafo de descripción */
+p {
+    font-size: 1.2rem; 
 }
 
 /* Estilo para el párrafo de descripción */
@@ -24,12 +28,10 @@ p {
     margin-bottom: 20px;
 }
 
-/* Estilo de los inputs y botones */
 input, button {
-    font-size: 1rem;
-    border-radius: 4px;
+    font-size: 1 rem; 
+    padding: 14px; 
 }
-
 input {
     width: 100%;
     padding: 12px;
@@ -43,13 +45,25 @@ button {
     background-color: #3d4e6d;
     color: white;
     border: none;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para el efecto 3D */
+    transition: all 0.2s ease;
 }
 
 button:hover {
     background-color: #263e6b;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Aumenta la sombra al pasar el cursor */
+    transform: translateY(-2px); /* Levanta el botón ligeramente */
 }
+
+button:active {
+    background-color: #1b2c4d;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduce la sombra cuando el botón es presionado */
+    transform: translateY(2px); /* Simula el efecto de presionar */
+}
+
 
 /* Estilos para las tarjetas de recetas */
 .recipe-card {
