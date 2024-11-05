@@ -119,8 +119,11 @@ function RecipeRecommender() {
           <h3 className="text-lg font-semibold mb-2">Recetas Recomendadas:</h3>
           <div className="recipe-list">
             {recipes.map((recipe, index) => (
+              
               <div key={index} className="recipe-card">
+                
                 <h4>{recipe.name}</h4>
+                  
                   <p className="ingredients">{recipe.ingredients.join(", ")}</p>
                   <p className="preparation">{recipe.preparation.join(" ")}</p>
               </div>
